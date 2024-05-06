@@ -18,7 +18,6 @@
       devShells.${system}.default = pkgs.mkShell {
         packages = with pkgs; [
           rust-bin.beta.latest.default
-          just
           cargo-watch
           rust-analyzer
         ];

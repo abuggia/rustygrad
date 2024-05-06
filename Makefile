@@ -8,3 +8,7 @@ test:
 run: 
 	cargo watch -c -x 'run'
 
+.PHONY: lint
+lint:
+	cargo watch -c -x 'clippy'
+

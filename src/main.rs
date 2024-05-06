@@ -1,10 +1,8 @@
-#![allow(dead_code)]
-
 use rustygrad::*;
 
 fn main() {
 
-    let xs = vec![
+    let xs = [
        vals(vec![2.0, 3.0, -1.0]),
        vals(vec![3.0, -1.0, 0.5]),
        vals(vec![0.5, 1.0, 1.0]),

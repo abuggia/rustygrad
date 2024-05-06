@@ -1,5 +1,3 @@
-#![allow(dead_code)]
-
 use std::ops::{Add, Mul, Sub, Div};
 use std::rc::Rc;
 use std::cell::{Ref, RefMut, RefCell};
@@ -33,7 +31,7 @@ impl Val {
     fn new(data: f64, op: Op) -> Self {
         Val(Rc::new(Data {
             data: RefCell::new(data),
-            grad: RefCell::new(0.0.into()),
+            grad: RefCell::new(0.),
             op
         }))
     }
@@ -102,7 +100,7 @@ impl Val {
                 val._back();
             },
 
-            Op::Scalar => return,
+            Op::Scalar => (),
         }
     }
 
@@ -121,12 +119,6 @@ impl Val {
     pub fn grad_mut(&self) -> RefMut<'_, f64> {
         self.0.grad.borrow_mut()
     }
-
-    /*
-    pub fn op(&self) -> String {
-        self.0.op.to_string();
-    }
-    */
 }
 
 impl Add for &Val {
@@ -134,7 +126,7 @@ impl Add for &Val {
 
     fn add(self, rhs: Self) -> Self::Output {
         Val::new(
-            (*self.data() + *rhs.data()).into(),
+            *self.data() + *rhs.data(),
             Op::Add(Val(Rc::clone(&self.0)), Val(Rc::clone(&rhs.0)))
         )
     }
@@ -145,7 +137,7 @@ impl Sub for &Val {
 
     fn sub(self, rhs: Self) -> Self::Output {
         Val::new(
-            (*self.data() - *rhs.data()).into(),
+            *self.data() - *rhs.data(),
             Op::Sub(Val(Rc::clone(&self.0)), Val(Rc::clone(&rhs.0)))
         )
     }
@@ -156,7 +148,7 @@ impl Mul for &Val {
 
     fn mul(self, rhs: Self) -> Self::Output {
         Val::new(
-            (*self.data() * *rhs.data()).into(),
+            *self.data() * *rhs.data(),
             Op::Mul(Val(Rc::clone(&self.0)), Val(Rc::clone(&rhs.0)))
         )
     }
@@ -167,7 +159,7 @@ impl Div for &Val {
 
     fn div(self, rhs: Self) -> Self::Output {
         Val::new(
-            (*self.data() / *rhs.data()).into(),
+            *self.data() / *rhs.data(),
             Op::Div(Val(Rc::clone(&self.0)), Val(Rc::clone(&rhs.0)))
         )
     }
@@ -207,7 +199,7 @@ pub fn val(x: f64) -> Val {
 }
 
 pub fn vals(xs: Vec<f64>) -> Vec<Val> {
-    xs.into_iter().map(|x| val(x)).collect()
+    xs.into_iter().map(val).collect()
 }
 
 impl Sum for Val {

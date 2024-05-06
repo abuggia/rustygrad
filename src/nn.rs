@@ -1,5 +1,3 @@
-#![allow(dead_code)]
-
 use crate::val::{Val, val, Relu};
 
 #[derive(Debug)]
@@ -18,7 +16,7 @@ impl Neuron {
         }
     }
 
-    fn forward(&self, xs: &Vec<Val>) -> Val {
+    fn forward(&self, xs: &[Val]) -> Val {
         let act = &self.bias + &xs
             .iter()
             .zip(self.weights.iter())
@@ -47,7 +45,7 @@ impl Layer {
         }
     }
 
-    fn forward(&self, xs: &Vec<Val>) -> Vec<Val> {
+    fn forward(&self, xs: &[Val]) -> Vec<Val> {
         self.neurons
             .iter()
             .map(|neuron| neuron.forward(xs))

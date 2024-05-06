@@ -5,6 +5,7 @@
 An autograd implementation in Rust inspired by Karpy's [micrograd](https://github.com/karpathy/micrograd)
 
 ```bash
+$ nix develop
 $ make run
 loss: 8.550928475748433,
 loss: 3.5195194111767454,
