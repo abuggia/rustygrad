@@ -204,7 +204,7 @@ pub fn vals(xs: Vec<f64>) -> Vec<Val> {
 
 impl Sum for Val {
     fn sum<I: Iterator<Item = Val>>(mut iter: I) -> Val {
-        let start = iter.next().expect("must be empty");
+        let start = iter.next().expect("must not be empty");
         iter.fold(start, |acc, val| &acc + &val)
     }
 }
